@@ -1,0 +1,11 @@
+{
+  "name": "Bikis",
+  "short_name": "Bikis",
+  "description": "Trouvez vos médicaments et pharmacies à Brazzaville.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#031b14",
+  "theme_color": "#0a2f25",
+  "lang": "fr",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

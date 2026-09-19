@@ -1,0 +1,63 @@
+/*
+  Bikis — Design tokens
+  À importer une fois dans main.js : import './assets/tokens.css'
+*/
+
+:root {
+  color-scheme: light;
+  /* Couleurs */
+  --color-bg: #FAF8F3;           /* fond général, blanc cassé chaud */
+  --color-surface: #FFFFFF;      /* cartes, surfaces élevées */
+  --color-primary: #1F5C4C;      /* vert profond — pharmacie, confiance */
+  --color-primary-light: #D9E9E1;/* vert clair — fonds de badges, hover */
+  --color-accent: #E8A33D;       /* ocre chaud — CTA, actions clés */
+  --color-text: #1C2420;         /* texte principal */
+  --color-text-muted: #6B7570;   /* texte secondaire */
+  --color-border: #B8DFC7;       /* séparateurs discrets */
+  --color-danger: #C1503E;       /* alertes, rupture de stock */
+
+  /* Typographie */
+  --font-base: 'Manrope', 'Segoe UI', sans-serif;
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-md: 1rem;
+  --fs-lg: 1.25rem;
+  --fs-xl: 1.625rem;
+
+  /* Espacement */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  /* Rayons */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-full: 999px;
+
+  /* Hauteur de la tab bar (utile pour le padding-bottom du contenu) */
+  --tabbar-height: 64px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-base);
+}
+
+body[data-theme='dark'] {
+  color-scheme: dark;
+  --color-bg: #031b14;
+  --color-surface: #082c21;
+  --color-primary-light: #164b38;
+  --color-text: #f2f7f3;
+  --color-text-muted: #9db8aa;
+  --color-border: #1c4939;
+}
