@@ -23,6 +23,9 @@ function submit() {
 <template>
   <main class="auth-page">
     <section class="auth-panel">
+      <button class="back-button" type="button" aria-label="Retourner à l'accueil" @click="router.push({ name: 'home' })">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>
+      </button>
       <p class="eyebrow">Bikis</p>
       <h1>Connexion</h1>
       <p class="intro">Retrouvez vos ordonnances et vos réservations.</p>
@@ -50,6 +53,9 @@ function submit() {
 <style scoped>
 .auth-page { display: grid; min-height: 100svh; place-items: center; padding: 24px; background: var(--color-bg); }
 .auth-panel { width: min(100%, 420px); padding: 32px 24px; border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); }
+.back-button { display: grid; width: 54px; height: 54px; margin-bottom: 18px; place-items: center; border: 0; border-radius: 50%; background: #4abd98; color: #fff; cursor: pointer; box-shadow: 0 8px 18px rgba(74, 189, 152, .2); transition: transform 160ms ease, background-color 160ms ease, box-shadow 160ms ease; }
+.back-button svg { width: 29px; height: 29px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2.8; }
+.back-button:hover, .back-button:focus-visible { background: #36aa83; box-shadow: 0 10px 22px rgba(74, 189, 152, .28); transform: translateX(-2px); }
 .eyebrow { margin: 0 0 8px; color: var(--color-primary); font-weight: 800; }
 h1 { margin: 0 0 8px; font-size: 30px; } .intro { margin: 0 0 24px; color: var(--color-text-muted); }
 form { display: grid; gap: 16px; } label { display: grid; gap: 7px; font-size: 13px; font-weight: 700; }

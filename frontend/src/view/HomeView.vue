@@ -238,18 +238,37 @@ function onPrescriptionSelected(event) {
 }
 
 .bottom-navigation__item { 
+  position: relative;
   display: flex; 
   flex-direction: column; 
   align-items: center; 
   gap: 2px; 
-  padding: 4px 8px; 
+  padding: 9px 13px; 
   border: 0; 
+  border-radius: 999px;
   background: transparent; 
   color: #719586; 
   font: inherit; 
   font-size: 10px; 
   cursor: pointer; 
+  transition: background-color 180ms ease, color 180ms ease, filter 180ms ease, opacity 180ms ease, transform 180ms ease, box-shadow 180ms ease;
 }
+
+.bottom-navigation:has(.bottom-navigation__item:hover) .bottom-navigation__item:not(:hover) {
+  filter: blur(1.4px);
+  opacity: .52;
+}
+
+.bottom-navigation__item:hover,
+.bottom-navigation__item:focus-visible {
+  z-index: 1;
+  background: #b9e8c9;
+  color: #145c3c;
+  box-shadow: 0 6px 14px rgba(31, 92, 76, .16);
+  transform: translateY(-2px);
+}
+
+.bottom-navigation__item:active { transform: translateY(0) scale(.96); }
 
 .bottom-navigation__item--active { 
   color: #45c77c; 
@@ -276,6 +295,11 @@ function onPrescriptionSelected(event) {
 
 .home:not(.home--dark) .bottom-navigation__item--active { 
   color: var(--color-primary); 
+}
+
+.home:not(.home--dark) .bottom-navigation__item:hover,
+.home:not(.home--dark) .bottom-navigation__item:focus-visible {
+  color: #145c3c;
 }
 
 .home__header { position: fixed; top: 0; left: 0; z-index: 90; display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; width: 100%; padding: 14px max(18px, calc((100vw - 1120px) / 2)); border-bottom: 1px solid var(--home-border); background: color-mix(in srgb, var(--home-bg) 92%, transparent); box-shadow: 0 8px 24px rgba(12, 49, 37, .08); backdrop-filter: blur(14px); }
