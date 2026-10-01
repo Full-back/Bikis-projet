@@ -5,8 +5,8 @@ import { computed } from 'vue'
 const router = useRouter(); const route = useRoute()
 const tabs = [
   { name: 'home', label: 'Accueil', icon: 'home' },
-  { name: 'prescriptions', label: 'Ordonnances', icon: 'file' },
-  { name: 'pharmacies', label: 'Suivi', icon: 'clock' },
+  { name: 'pharmacies', label: 'Recherche', icon: 'search' },
+  { name: 'prescriptions', label: 'Favoris', icon: 'bookmark' },
   { name: 'profile', label: 'Profil', icon: 'user' },
 ]
 const active = computed(() => route.name)
@@ -26,13 +26,12 @@ const active = computed(() => route.name)
         <svg v-if="tab.icon === 'home'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <path d="m4 10.5 8-6.5 8 6.5v8a1 1 0 0 1-1 1h-4v-5h-6v5H5a1 1 0 0 1-1-1v-8Z" stroke-linejoin="round" />
         </svg>
-        <svg v-else-if="tab.icon === 'file'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M7 3.5h7l3 3V20H7a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z" stroke-linejoin="round" />
-          <path d="M14 3.5V7h3M9 11h6M9 14.5h6" stroke-linecap="round" />
+        <svg v-else-if="tab.icon === 'search'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="11" cy="11" r="6.5" />
+          <path d="m20 20-3.8-3.8" stroke-linecap="round" />
         </svg>
-        <svg v-else-if="tab.icon === 'clock'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <circle cx="12" cy="12" r="8" />
-          <path d="M12 7.5V12l3 2" stroke-linecap="round" stroke-linejoin="round" />
+        <svg v-else-if="tab.icon === 'bookmark'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M6 4h12v16l-6-4-6 4V4Z" stroke-linejoin="round" />
         </svg>
         <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <circle cx="12" cy="8" r="3.2" />

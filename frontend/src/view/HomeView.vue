@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/authStore'
+import BottomNav from '../components/common/BottomNav.vue'
 import pharmacyImage from '../assets/images/image_1.jpg'
 import scanBackground from '../assets/images/image_2.jpg'
 import bikisLogo from '../assets/images/bikis-logo.png'
@@ -13,22 +14,8 @@ const isDarkMode = ref(false)
 const selectedPrescription = ref(null)
 const fileInput = ref(null)
 const searchInput = ref(null)
-const activeNavigation = ref('Accueil')
 const isNotificationMenuOpen = ref(false)
-const isScanViewVisible = ref(false)
 const displayName = computed(() => [auth.user.firstName, auth.user.lastName].filter(Boolean).join(' '))
-
-function goToNavigation(item) {
-  activeNavigation.value = item
-  const routes = {
-    Accueil: 'home',
-    Recherche: 'pharmacies',
-    Favoris: 'prescriptions',
-    Profil: 'profile',
-  }
-  isScanViewVisible.value = false
-  router.push({ name: routes[item] })
-}
 
 const notifications = ref([
   { id: 1, title: 'Réservation prête', text: 'Votre Amoxicilline est disponible.', time: 'Il y a 10 min', unread: true },
@@ -46,7 +33,7 @@ function openFilePicker() {
 }
 
 function openScanView() {
-  isScanViewVisible.value = true
+  router.push({ name: 'scan' })
 }
 
 function onPrescriptionSelected(event) {
@@ -55,8 +42,6 @@ function onPrescriptionSelected(event) {
 </script>
 
 <template>
-  <ScanView v-if="isScanViewVisible" @close="isScanViewVisible = false" />
-
   <main class="home" :class="{ 'home--dark': isDarkMode }">
     <div class="home__container">
       <header class="home__header">
@@ -160,23 +145,8 @@ function onPrescriptionSelected(event) {
 
     </div>
 
-    <!-- Navigation épurée (Accueil, Recherche/Carte, Favoris, Profil) -->
-    <nav class="bottom-navigation" aria-label="Navigation principale">
-      <button
-        v-for="item in ['Accueil', 'Recherche', 'Favoris', 'Profil']"
-        :key="item"
-        class="bottom-navigation__item"
-        :class="{ 'bottom-navigation__item--active': activeNavigation === item }"
-        :aria-current="activeNavigation === item ? 'page' : undefined"
-        @click="goToNavigation(item)"
-      >
-        <span class="bottom-navigation__icon" aria-hidden="true">
-          {{ item === 'Accueil' ? '⌂' : item === 'Recherche' ? '⌕' : item === 'Favoris' ? '✦' : '○' }}
-        </span>
-        <span>{{ item }}</span>
-      </button>
-    </nav>
   </main>
+  <BottomNav />
 </template>
 
 <style scoped>
@@ -212,94 +182,10 @@ function onPrescriptionSelected(event) {
 
 .home__container { max-width: 1120px; margin: 0 auto; padding-top: 82px; }
 
-.bottom-navigation { 
-  position: fixed; 
-  bottom: 20px; 
-  left: 50%; 
-  transform: translateX(-50%); 
-  z-index: 100; 
-  display: flex; 
-  width: 92%; 
-  max-width: 420px; 
-  justify-content: space-around; 
-  align-items: center;
-  padding: 10px 14px; 
-  border: 1px solid #174635;
-  border-radius: 999px;
-  background: rgba(3, 27, 20, 0.92); 
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35); 
-  backdrop-filter: blur(12px);
-}
-
 @media (max-width: 600px) {
   .home {
     padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px));
   }
-}
-
-.bottom-navigation__item { 
-  position: relative;
-  display: flex; 
-  flex-direction: column; 
-  align-items: center; 
-  gap: 2px; 
-  padding: 9px 13px; 
-  border: 0; 
-  border-radius: 999px;
-  background: transparent; 
-  color: #719586; 
-  font: inherit; 
-  font-size: 10px; 
-  cursor: pointer; 
-  transition: background-color 180ms ease, color 180ms ease, filter 180ms ease, opacity 180ms ease, transform 180ms ease, box-shadow 180ms ease;
-}
-
-.bottom-navigation:has(.bottom-navigation__item:hover) .bottom-navigation__item:not(:hover) {
-  filter: blur(1.4px);
-  opacity: .52;
-}
-
-.bottom-navigation__item:hover,
-.bottom-navigation__item:focus-visible {
-  z-index: 1;
-  background: #b9e8c9;
-  color: #145c3c;
-  box-shadow: 0 6px 14px rgba(31, 92, 76, .16);
-  transform: translateY(-2px);
-}
-
-.bottom-navigation__item:active { transform: translateY(0) scale(.96); }
-
-.bottom-navigation__item--active { 
-  color: #45c77c; 
-}
-
-.bottom-navigation__icon { 
-  height: 20px; 
-  font-size: 18px; 
-  line-height: 18px; 
-}
-
-.bottom-navigation__item--active .bottom-navigation__icon { 
-  text-shadow: 0 0 10px rgba(69, 199, 124, .5); 
-}
-
-.home:not(.home--dark) .bottom-navigation { 
-  border-color: var(--home-border); 
-  background: rgba(255, 255, 255, 0.92); 
-}
-
-.home:not(.home--dark) .bottom-navigation__item { 
-  color: var(--home-muted); 
-}
-
-.home:not(.home--dark) .bottom-navigation__item--active { 
-  color: var(--color-primary); 
-}
-
-.home:not(.home--dark) .bottom-navigation__item:hover,
-.home:not(.home--dark) .bottom-navigation__item:focus-visible {
-  color: #145c3c;
 }
 
 .home__header { position: fixed; top: 0; left: 0; z-index: 90; display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; width: 100%; padding: 14px max(18px, calc((100vw - 1120px) / 2)); border-bottom: 1px solid var(--home-border); background: color-mix(in srgb, var(--home-bg) 92%, transparent); box-shadow: 0 8px 24px rgba(12, 49, 37, .08); backdrop-filter: blur(14px); }
@@ -326,7 +212,7 @@ function onPrescriptionSelected(event) {
 .notification-trigger { position: relative; display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid var(--home-border); border-radius: 14px; background: var(--home-surface); color: var(--home-text); cursor: pointer; }
 .notification-trigger svg { width: 20px; height: 20px; }
 .notification-badge { position: absolute; top: -5px; right: -4px; display: grid; place-items: center; min-width: 18px; height: 18px; padding: 0 4px; border: 2px solid var(--home-bg); border-radius: 999px; background: #c1503e; color: #fff; font-size: 9px; font-weight: 800; }
-.notification-dropdown { position: absolute; top: calc(100% + 9px); right: -36px; width: min(320px, calc(100vw - 28px)); overflow: hidden; border: 1px solid var(--home-border); border-radius: 16px; background: var(--home-surface); box-shadow: 0 16px 35px rgba(12, 49, 37, .18); }
+.notification-dropdown { position: fixed; top: 72px; right: 14px; width: min(320px, calc(100vw - 28px)); overflow: hidden; border: 1px solid var(--home-border); border-radius: 16px; background: var(--home-surface); box-shadow: 0 16px 35px rgba(12, 49, 37, .18); }
 .notification-dropdown__header { display: flex; align-items: center; justify-content: space-between; padding: 14px 15px; border-bottom: 1px solid var(--home-border); }
 .notification-dropdown__header strong { color: var(--home-text); font-size: 13px; }
 .notification-dropdown__header button { border: 0; background: transparent; color: var(--color-primary); font-size: 10px; font-weight: 800; cursor: pointer; }
@@ -445,7 +331,6 @@ function onPrescriptionSelected(event) {
   .home { padding-right: 13px; padding-left: 13px; }
   .location-indicator small { display: none; }
   .location-indicator strong { font-size: 9px; }
-  .notification-dropdown { right: -48px; }
   .account-dropdown { right: -3px; width: 205px; }
   .quick-actions--duo { gap: 6px; }
   .quick-actions__card { min-height: 112px; padding: 9px; }
